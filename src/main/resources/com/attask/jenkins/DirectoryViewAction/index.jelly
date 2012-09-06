@@ -1,0 +1,88 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+	<style>
+		<!--.directory>.name {-->
+			<!--color: red;-->
+		<!--}-->
+		#directoryView li>div {
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		#directoryView .directory>.size,
+		#directoryView .file>.size {
+			color: green;
+			margin-left: 5px;
+		}
+
+		#directoryView .file>.lastModified {
+			color: purple;
+			margin-left: 5px;
+		}
+
+		#directoryView .directory>ul.directoryList {
+			list-style-image: url(${rootURL}/images/16x16/folder.png)
+		}
+
+		#directoryView .directory>ul.fileList {
+			list-style-image: url(${rootURL}/images/16x16/text.png)
+		}
+
+		#directoryView .directory {
+			padding-bottom: 5px;
+		}
+
+		#directoryView .directory>.size {
+			display: none;
+		}
+
+		#directoryView .directory>.name {
+			display: none;
+		}
+
+		#directoryView li>.directory>.name {
+			cursor: pointer;
+			color: #204A87;
+			display: inline;
+		}
+
+		#directoryView li>.directory>.size {
+			display: inline;
+		}
+
+		#directoryView li>.directory>.name:hover {
+			text-decoration: underline;
+		}
+
+		#directoryView li>.directory.collapsed>ul>li {
+			display: none;
+		}
+
+		#directoryView .fileList,
+		#directoryView .directoryList {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+
+		#directoryView .directoryList li {
+			line-height: 20px;
+		}
+	</style>
+
+	<l:layout norefresh="true" title="${it.displayName}">
+		<st:include it="${it.findRun()}" page="sidepanel.jelly"/>
+		<l:main-panel>
+			<div id="directoryView">
+				<h2>${it.displayName}</h2>
+				<st:include it="${it.directory}" page="index.jelly"/>
+			</div>
+		</l:main-panel>
+	</l:layout>
+
+	<script>
+		$$('.directory>.name').each(function(it) {
+			it.observe('click', function(e) {
+				e.target.up('.directory').toggleClassName('collapsed');
+			});
+		});
+	</script>
+</j:jelly>

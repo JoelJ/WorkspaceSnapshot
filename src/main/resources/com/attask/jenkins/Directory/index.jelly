@@ -1,0 +1,21 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler">
+
+	<div class="directory collapsed">
+		<span class="name">${it.name}</span>
+		<span class="size" data="it.getSize()">${it.getPrettySize()}</span>
+		<ul class="directoryList">
+			<j:forEach var="directory" items="${it.directories}">
+				<li>
+					<st:include it="${directory}" page="index.jelly" />
+				</li>
+			</j:forEach>
+		</ul>
+		<ul class="fileList">
+			<j:forEach var="file" items="${it.files}">
+				<li>
+					<st:include it="${file}" page="index.jelly" />
+				</li>
+			</j:forEach>
+		</ul>
+	</div>
+</j:jelly>
